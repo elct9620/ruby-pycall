@@ -11,7 +11,7 @@ env:
 
 jobs:
   build-and-push-image:
-    name: Ruby ${{ matrix.ruby.version }} with Python ${{ matrix.python.version }} (${{ matrix.variant.name }})
+    name: ruby:${{ matrix.ruby.version }}-${{ matrix.variant.name }}-py${{ matrix.python.version }}
     runs-on: ubuntu-latest
     continue-on-error: true
     strategy:
