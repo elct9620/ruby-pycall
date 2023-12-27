@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  REPOSITORY: ${{ github.repository }}
 
 jobs:
   build-and-push-image:
@@ -16,6 +16,7 @@ jobs:
       matrix:
         variant:
           - name: bookworm
+            major: yes
         ruby:
           - version: '3.3.0'
         python:
@@ -40,7 +41,15 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}
+      - name: Build tags from matrix
+        id: info
+        run: ./scripts/tag.sh
+        evn:
+          RUBY_VERSION: ${{ matrix.ruby.version }}
+          PYTHON_VERSION: ${{ matrix.python.version }}
+          VARIANT: ${{ matrix.variant.name }}
+          MAJOR_VARIANT: ${{ matrix.variant.major }}
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
@@ -52,8 +61,7 @@ jobs:
             RUBY_VERSION=${{ matrix.ruby.version }}
             PYTHON_VERSION=${{ matrix.python.version }}
             PYTHON_GPG_KEY=${{ matrix.python.gpg }}
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ matrix.ruby.version }}-${{ matrix.variant.name }}-py${{ matrix.python.version }}
+          tags: ${{ steps.info.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
