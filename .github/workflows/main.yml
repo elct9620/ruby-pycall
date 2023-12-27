@@ -53,7 +53,7 @@ jobs:
             PYTHON_VERSION=${{ matrix.python.version }}
             PYTHON_GPG_KEY=${{ matrix.python.gpg }}
           tags: |
-            ${{ env.IMAGE_NAME }}:${ matrix.ruby.version }-${{ matrix.variant.name }}-py${{ matrix.python.version }}
+            ${{ env.IMAGE_NAME }}:${{ matrix.ruby.version }}-${{ matrix.variant.name }}-py${{ matrix.python.version }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
