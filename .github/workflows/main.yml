@@ -17,7 +17,7 @@ jobs:
         variant:
           - name: bookworm
         ruby:
-          - version: '3.3.3'
+          - version: '3.3.0'
         python:
           - version: '3.12.1'
             gpg: 7169605F62C751356D054A26A821E680E5FA6305
