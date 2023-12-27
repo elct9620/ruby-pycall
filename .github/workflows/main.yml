@@ -45,7 +45,7 @@ jobs:
       - name: Build tags from matrix
         id: info
         run: ./scripts/tag.sh
-        evn:
+        env:
           RUBY_VERSION: ${{ matrix.ruby.version }}
           PYTHON_VERSION: ${{ matrix.python.version }}
           VARIANT: ${{ matrix.variant.name }}
