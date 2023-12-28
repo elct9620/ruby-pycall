@@ -77,5 +77,5 @@ jobs:
             PYTHON_GPG_KEY=${{ matrix.python.gpg }}
           tags: ${{ steps.info.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=${{ github.job }}
-          cache-to: type=gha,mode=max,scope=${{ github.job }}
+          cache-from: type=gha,scope=ruby${{ matrix.ruby.version }}-${{ matrix.variant.name }}-py${{ matrix.python.version }}
+          cache-to: type=gha,mode=max,scope=ruby${{ matrix.ruby.version }}-${{ matrix.variant.name }}-py${{ matrix.python.version }}
